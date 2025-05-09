@@ -20,7 +20,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/api/login', formData);
+            const response = await axios.post('https://footballtrading.onrender.com/api/login', formData);
             alert('Inicio de sesión exitoso');
             setUser(response.data.user.username);
         } catch (error) {
