@@ -11,9 +11,10 @@ export default (app) => {
     app.use(express.urlencoded({ extended: true }));
 
     const corsOptions = {
-        origin: 'https://footballtrading.onrender.com', // Permitir solicitudes desde este origen
+        origin: ['https://footballtrading.onrender.com', 'http://localhost:3000'], // Permitir solicitudes desde estos orígenes
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-        allowedHeaders: "Content-Type,Authorization"
+        allowedHeaders: "Content-Type,Authorization",
+        credentials: true // Permitir el uso de cookies o credenciales
     };
     app.use(cors(corsOptions));
 
