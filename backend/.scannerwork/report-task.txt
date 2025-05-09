@@ -1,0 +1,6 @@
+projectKey=foot-trading-backend
+serverUrl=http://localhost:9000
+serverVersion=25.3.0.104237
+dashboardUrl=http://localhost:9000/dashboard?id=foot-trading-backend
+ceTaskId=f5af9d0e-5bab-416b-8853-019da9de2592
+ceTaskUrl=http://localhost:9000/api/ce/task?id=f5af9d0e-5bab-416b-8853-019da9de2592

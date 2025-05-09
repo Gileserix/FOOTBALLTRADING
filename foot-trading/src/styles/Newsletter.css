@@ -1,0 +1,72 @@
+.newsletter {
+  background-color: #4AC2F5;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin: 2rem 0;
+  margin-bottom: 2rem; /* Ajusta el espacio inferior para separar del footer */
+  width: 100%; /* Asegura que el ancho sea del 100% */
+  max-width: 600px; /* Ajusta el ancho máximo para que coincida con el de welcome-text */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.newsletter-content {
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 2rem; /* Add margin to separate text from input and button */
+}
+
+.newsletter h2 {
+  margin-bottom: 1rem;
+  align-self: flex-start;
+  margin-top: 0; /* Ensure the text is at the top */
+}
+
+.newsletter form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.newsletter input {
+  padding: 0.5rem;
+  margin-bottom: 0; /* Remove bottom margin */
+  margin-right: 1rem; /* Add right margin */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.newsletter button {
+  padding: 0.5rem 1rem;
+  background-color: #152856;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.newsletter button:hover {
+  background-color: #005080;
+}
+
+.newsletter img {
+  max-width: 300px; /* Increase the width of the image */
+  max-height: 250px; /* Increase the height of the image */
+  border-radius: 10px;
+  margin-left: 4rem; /* Increase the margin to add more space between input and image */
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  justify-content: flex-start;
+  margin-top: 5rem; /* Increase margin to position input and button lower */
+}

@@ -1,0 +1,61 @@
+.home-page {
+  text-align: center;
+  padding: 2rem;
+  background-color: #C9EEFF; /* Color de fondo de la página */
+  min-height: 100vh; /* Asegura que la altura mínima sea la altura de la ventana */
+  box-sizing: border-box; /* Asegura que el padding no cause desplazamiento */
+  margin: 0 auto; /* Centra la página horizontalmente */
+}
+
+.logo-large img {
+  max-width: 100%;
+  height: auto;
+  margin: 2rem 0;
+}
+
+.welcome-text {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin: 2rem 0;
+  background-color: #4AC2F5; /* Color de fondo del cuadro de texto */
+  padding: 1rem;
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra para el cuadro de texto */
+}
+
+.content-section {
+  display: flex;
+  align-items: center;
+  margin: 2rem 0;
+}
+
+.content-left, .content-right {
+  flex: 1;
+  padding: 1rem;
+}
+
+.content-left img, .content-right img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.content-left p, .content-right p {
+  background-color: #4AC2F5; /* Color de fondo del cuadro de texto */
+  padding: 1rem;
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra para el cuadro de texto */
+  font-size: 1.5rem; /* Aumenta el tamaño de la letra */
+  font-weight: bold; /* Hace el texto en negrita */
+}
+
+.content-section + .content-section {
+  margin-top: 2rem; /* Espacio entre los cuadros */
+}
+
+.newsletter-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem; /* Ajusta el espacio inferior para evitar que el footer corte el componente */
+}
+

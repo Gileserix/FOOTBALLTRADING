@@ -1,0 +1,21 @@
+.profile-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 300px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.profile-container h2 {
+    margin-bottom: 20px;
+}
+
+.profile-info {
+    text-align: left;
+}
+
+.profile-info p {
+    margin: 10px 0;
+}

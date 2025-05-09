@@ -1,0 +1,160 @@
+.ropa-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Reduced gap */
+    padding: 20px;
+    width: 100%;
+}
+
+.ropa-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%;
+    max-width: 1200px;
+    height: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.ropa-item img {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+    margin-right: 20px;
+}
+
+.ropa-item-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    gap: 70px; /* Reduced gap */
+}
+
+.ropa-item-info .info-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.ropa-item-info .title-box {
+    max-width: 300px;
+    margin-left: -20px; /* Special margin to be closer to the image */
+    display: flex;
+    align-items: center; /* Ensure titles are vertically centered */
+}
+
+.ropa-item-info .price-box {
+    display: flex;
+    flex-direction: column; /* Ensure prices are displayed one above the other */
+}
+
+.ropa-item-info h3 {
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.ropa-item-info .price {
+    font-size: 1em;
+    color: #555;
+    margin: 0;
+}
+
+.ropa-item-info .price-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.ropa-item-info .uploader {
+    display: flex;
+    align-items: center;
+    font-size: 0.9em;
+    color: #777;
+    margin: 0;
+}
+
+.ropa-item-info .uploader img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.ropa-item button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.ropa-item button:hover {
+    background-color: #0056b3;
+}
+
+.search-bar {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 1em;
+}
+
+.breadcrumb {
+    margin-top: 20px;
+}
+
+.breadcrumb select {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.pagination {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.pagination button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: #0056b3;
+}
+
+.pagination button.disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+.pagination .page-number {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
