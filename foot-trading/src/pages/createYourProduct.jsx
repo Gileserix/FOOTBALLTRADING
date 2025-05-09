@@ -54,7 +54,7 @@ const CreaTuProducto = () => {
 
     try {
       // Crear producto en la base de datos
-      const response = await axios.post('http://localhost:3000/api/upload-product', data, {
+      const response = await axios.post('https://footballtrading.onrender.com/api/upload-product', data, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

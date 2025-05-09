@@ -30,7 +30,7 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/api/users', formData);
+      const response = await axios.post('https://footballtrading.onrender.com/api/users', formData);
       alert('Usuario registrado exitosamente');
       console.log('Response:', response.data);
       // Redirigir al usuario a la página de inicio de sesión
