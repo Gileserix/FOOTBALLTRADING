@@ -1,6 +1,7 @@
 import User from '../models/user.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { sendVerificationEmail } from '../services/emailService.js';
 
 const secretKey = process.env.JWT_SECRET || 'your_secret_key';
 
@@ -25,13 +26,20 @@ export const createUserController = async (req, res) => {
             firstName,
             lastName,
             birthDate,
-            address
+            address,
+            isVerified: false
         });
 
         // Guardar el usuario en la base de datos
         await newUser.save();
 
-        res.status(201).json({ message: 'Usuario creado exitosamente', user: newUser });
+        // Generar token de verificación
+        const token = jwt.sign({ id: newUser._id, email: newUser.email }, secretKey, { expiresIn: '1h' });
+
+        // Enviar correo de verificación
+        await sendVerificationEmail(newUser.email, token);
+
+        res.status(201).json({ message: 'Usuario creado. Verifica tu correo electrónico.', user: newUser });
     } catch (error) {
         console.error('Error al crear el usuario:', error);
         res.status(400).json({ message: 'Error al crear el usuario', error: error.message });
