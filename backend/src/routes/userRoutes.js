@@ -11,12 +11,20 @@ router.get('/verify-email', async (req, res) => {
     const { token } = req.query;
 
     try {
-        // Verificar el token
+        console.log('Token recibido:', token);
         const decoded = jwt.verify(token, secretKey);
+        console.log('Token decodificado:', decoded);
+
         const user = await User.findById(decoded.id);
+        console.log('Usuario encontrado:', user);
 
         if (!user) {
             return res.status(404).json({ message: 'Usuario no encontrado.' });
+        }
+
+        // Verificar que la contraseña encriptada coincida
+        if (user.password !== decoded.password) {
+            return res.status(400).json({ message: 'Token inválido o expirado.' });
         }
 
         // Marcar el correo como verificado

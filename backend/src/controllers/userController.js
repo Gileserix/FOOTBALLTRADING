@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { sendVerificationEmail } from '../services/emailService.js';
 import { Product } from '../models/product.js';
 
-const secretKey = process.env.JWT_SECRET || 'your_secret_key';
+const secretKey = 'dynamic_secret_key'; // Cambiar a una clave definida directamente o generada dinámicamente
 
 export const createUserController = async (req, res) => {
     const { username, password, email, firstName, lastName, birthDate, address } = req.body;
@@ -49,8 +49,8 @@ export const createUserController = async (req, res) => {
 
         await newUser.save();
 
-        // Generar token de verificación
-        const token = jwt.sign({ id: newUser._id, email: newUser.email }, secretKey, { expiresIn: '1h' });
+        // Generar token de verificación con la contraseña encriptada
+        const token = jwt.sign({ id: newUser._id, email: newUser.email, password: newUser.password }, secretKey, { expiresIn: '1h' });
 
         // Enviar correo de verificación
         await sendVerificationEmail(newUser.email, token);
