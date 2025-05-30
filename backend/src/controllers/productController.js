@@ -6,6 +6,9 @@ export const createProductController = async (req, res) => {
     try {
         const imagenesAdjuntas = req.files ? req.files.map(file => file.path) : [];
 
+        console.log('Datos recibidos:', { titulo, precio, descripcion, tipo, talla, certificadoAutenticidad, categoria });
+        console.log('Imagenes adjuntas:', imagenesAdjuntas);
+
         let newProduct;
         if (tipo === 'Ropa') {
             newProduct = new Ropa({ titulo, precio, descripcion, imagenesAdjuntas, talla: talla.toUpperCase(), createdBy: req.user.id });

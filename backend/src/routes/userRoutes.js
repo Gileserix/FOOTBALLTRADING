@@ -12,9 +12,12 @@ router.get('/verify-email', async (req, res) => {
 
     try {
         console.log('Token recibido:', token);
-        const decoded = jwt.verify(token, secretKey);
+
+        // Decodificar el token para obtener el ID del usuario
+        const decoded = jwt.decode(token);
         console.log('Token decodificado:', decoded);
 
+        // Buscar al usuario en la base de datos
         const user = await User.findById(decoded.id);
         console.log('Usuario encontrado:', user);
 
@@ -22,14 +25,16 @@ router.get('/verify-email', async (req, res) => {
             return res.status(404).json({ message: 'Usuario no encontrado.' });
         }
 
-        // Verificar que la contraseña encriptada coincida
-        if (user.password !== decoded.password) {
+        // Comparar el token recibido con los datos del usuario
+        const isTokenValid = jwt.verify(token, user.password); // Usar la contraseña encriptada como clave secreta
+        if (!isTokenValid) {
             return res.status(400).json({ message: 'Token inválido o expirado.' });
         }
 
         // Marcar el correo como verificado
         user.isVerified = true;
         await user.save();
+        console.log('Usuario actualizado:', user);
 
         res.status(200).json({ message: 'Correo verificado exitosamente.' });
     } catch (error) {
