@@ -12,7 +12,8 @@ import Login from './components/login.jsx'; // Importa el componente de inicio d
 import Profile from './pages/profile.jsx'; // Importa el componente de perfil
 import { CartProvider } from './services/cartContext.js';
 import { ProductProvider } from './services/productContext.js';
-import { UserProvider } from './services/userContext.js'; // Importa el UserProvider
+import { UserProvider } from './services/userContext.js';
+import EmailConfirmation from './pages/EmailConfirmation'; // Importa el UserProvider
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/create-your-product" element={<CreaTuProducto />} />
                 <Route path="/accessories" element={<Accesorios />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/email-confirmation" element={<EmailConfirmation />} /> {/* Añade la ruta de confirmación de correo electrónico */}
                 <Route path="/login" element={<Login />} /> {/* Añade la ruta de inicio de sesión */}
                 <Route path="/profile" element={<Profile />} /> {/* Añade la ruta de perfil */}
                 {/* Add other routes here */}
