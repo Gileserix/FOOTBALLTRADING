@@ -10,6 +10,7 @@ import mongoose from 'mongoose';
  *         - titulo
  *         - precio
  *         - descripcion
+ *         - createdBy
  *       properties:
  *         id:
  *           type: string
@@ -27,6 +28,9 @@ import mongoose from 'mongoose';
  *           type: string
  *           format: date-time
  *           description: Fecha de creación del producto
+ *         createdBy:
+ *           type: string
+ *           description: ID del usuario que creó el producto
  *         talla:
  *           type: string
  *           description: Talla del producto (solo para ropa)
@@ -68,6 +72,11 @@ const productSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', // Relación con el modelo de usuario
+        required: true
     }
 }, { discriminatorKey: 'tipo' });
 

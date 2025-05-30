@@ -40,55 +40,24 @@ import mongoose from 'mongoose';
  *         address:
  *           type: string
  *           description: Dirección del usuario
+ *         isVerified:
+ *           type: boolean
+ *           description: Indica si el correo del usuario está verificado
  *         createdAt:
  *           type: string
  *           format: date-time
  *           description: Fecha de creación del usuario
  */
 const userSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true,
-        lowercase: true // Almacenar en minúsculas
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true,
-        lowercase: true // Almacenar en minúsculas
-    },
-    firstName: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    lastName: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    birthDate: {
-        type: Date,
-        required: true
-    },
-    address: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
+    username: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    birthDate: { type: Date, required: true },
+    address: { type: String, required: true },
+    isVerified: { type: Boolean, default: false }, // Campo para verificar el correo
+    createdAt: { type: Date, default: Date.now }
 });
 
-const User = mongoose.model('User', userSchema);
-
-export default User;
+export default mongoose.model('User', userSchema);

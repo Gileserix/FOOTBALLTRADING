@@ -4,23 +4,19 @@ export const createProductController = async (req, res) => {
     const { titulo, precio, descripcion, tipo, talla, certificadoAutenticidad, categoria } = req.body;
 
     try {
-        // Obtener las URLs de las imágenes subidas a Cloudinary
         const imagenesAdjuntas = req.files ? req.files.map(file => file.path) : [];
-
-        console.log('Datos recibidos:', { titulo, precio, descripcion, tipo, talla, certificadoAutenticidad, categoria, imagenesAdjuntas });
 
         let newProduct;
         if (tipo === 'Ropa') {
-            newProduct = new Ropa({ titulo, precio, descripcion, imagenesAdjuntas, talla: talla.toUpperCase() });
+            newProduct = new Ropa({ titulo, precio, descripcion, imagenesAdjuntas, talla: talla.toUpperCase(), createdBy: req.user.id });
         } else if (tipo === 'Carta') {
-            newProduct = new Carta({ titulo, precio, descripcion, imagenesAdjuntas, certificadoAutenticidad });
+            newProduct = new Carta({ titulo, precio, descripcion, imagenesAdjuntas, certificadoAutenticidad, createdBy: req.user.id });
         } else if (tipo === 'Accesorio') {
-            newProduct = new Accesorio({ titulo, precio, descripcion, imagenesAdjuntas, categoria });
+            newProduct = new Accesorio({ titulo, precio, descripcion, imagenesAdjuntas, categoria, createdBy: req.user.id });
         } else {
             return res.status(400).json({ message: 'Tipo de producto no válido' });
         }
 
-        // Guardar el producto en la base de datos
         await newProduct.save();
 
         res.status(201).json({ message: 'Producto creado exitosamente', product: newProduct });
@@ -34,7 +30,6 @@ export const deleteProductController = async (req, res) => {
     const { id } = req.params;
 
     try {
-        // Buscar y eliminar el producto por ID
         const deletedProduct = await Product.findByIdAndDelete(id);
 
         if (!deletedProduct) {

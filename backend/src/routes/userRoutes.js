@@ -11,6 +11,7 @@ router.get('/verify-email', async (req, res) => {
     const { token } = req.query;
 
     try {
+        // Verificar el token
         const decoded = jwt.verify(token, secretKey);
         const user = await User.findById(decoded.id);
 
@@ -18,6 +19,7 @@ router.get('/verify-email', async (req, res) => {
             return res.status(404).json({ message: 'Usuario no encontrado.' });
         }
 
+        // Marcar el correo como verificado
         user.isVerified = true;
         await user.save();
 
