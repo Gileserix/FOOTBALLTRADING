@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export const sendVerificationEmail = async (to, token) => {
-    const verificationUrl = `https://footballtrading.onrender.com/api/users/verify-email?token=${token}`;
+    const verificationUrl = `https://footballtrading.vercel.app/verify-email?token=${token}`; // Cambiar al dominio del frontend
     const mailOptions = {
         from: '"Foot Trading" <no-reply@footballtrading.com>',
         to,
