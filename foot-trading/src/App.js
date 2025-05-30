@@ -30,7 +30,7 @@ function App() {
                 <Route path="/create-your-product" element={<CreaTuProducto />} />
                 <Route path="/accessories" element={<Accesorios />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/email-confirmation" element={<EmailConfirmation />} /> {/* Añade la ruta de confirmación de correo electrónico */}
+                <Route path="/verify-email" element={<EmailConfirmation />} /> {/* Añade la ruta de confirmación de correo electrónico */}
                 <Route path="/login" element={<Login />} /> {/* Añade la ruta de inicio de sesión */}
                 <Route path="/profile" element={<Profile />} /> {/* Añade la ruta de perfil */}
                 {/* Add other routes here */}
