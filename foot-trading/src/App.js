@@ -9,11 +9,12 @@ import CreaTuProducto from './pages/createYourProduct.jsx';
 import Accesorios from './pages/accessories.jsx';
 import Register from './pages/register.jsx';
 import Login from './components/login.jsx'; // Importa el componente de inicio de sesión
+import EmailConfirmation from './pages/EmailConfirmation.jsx';
 import Profile from './pages/profile.jsx'; // Importa el componente de perfil
 import { CartProvider } from './services/cartContext.js';
 import { ProductProvider } from './services/productContext.js';
 import { UserProvider } from './services/userContext.js';
-import EmailConfirmation from './pages/EmailConfirmation.jsx'; // Importa el UserProvider
+ // Importa el UserProvider
 
 function App() {
   return (
