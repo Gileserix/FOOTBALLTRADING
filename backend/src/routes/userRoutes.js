@@ -11,22 +11,22 @@ router.get('/verify-email', async (req, res) => {
     const { token } = req.query;
 
     try {
-        // Decodifica el token para obtener el id
+        // 1. Decodifica el token para obtener el id
         const decoded = jwt.decode(token);
         if (!decoded?.id) {
             return res.status(400).json({ message: 'Token inválido.' });
         }
 
-        // Busca el usuario
+        // 2. Busca el usuario
         const user = await User.findById(decoded.id);
         if (!user) {
             return res.status(404).json({ message: 'Usuario no encontrado.' });
         }
 
-        // Verifica el token usando la contraseña encriptada como clave
+        // 3. Verifica el token usando la contraseña encriptada como clave
         jwt.verify(token, user.password);
 
-        // Marca el usuario como verificado
+        // 4. Marca el usuario como verificado
         user.isVerified = true;
         await user.save();
 
