@@ -140,3 +140,33 @@ export const deleteUserController = async (req, res) => {
         res.status(400).json({ message: 'Error al borrar el usuario', error: error.message });
     }
 };
+
+export const verifyEmailController = async (req, res) => {
+    const { token } = req.query;
+
+    try {
+        // 1. Decodifica el token para obtener el id
+        const decoded = jwt.decode(token);
+        if (!decoded?.id) {
+            return res.status(400).json({ message: 'Token inválido.' });
+        }
+
+        // 2. Busca el usuario
+        const user = await User.findById(decoded.id);
+        if (!user) {
+            return res.status(404).json({ message: 'Usuario no encontrado.' });
+        }
+
+        // 3. Verifica el token usando la contraseña encriptada como clave
+        jwt.verify(token, user.password);
+
+        // 4. Marca el usuario como verificado
+        user.isVerified = true;
+        await user.save();
+
+        res.status(200).json({ message: 'Correo verificado exitosamente.' });
+    } catch (error) {
+        console.error('Error al verificar el correo:', error);
+        res.status(400).json({ message: 'Token inválido o expirado.' });
+    }
+};
