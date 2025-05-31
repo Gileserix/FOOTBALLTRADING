@@ -13,7 +13,7 @@ import Profile from './pages/profile.jsx'; // Importa el componente de perfil
 import { CartProvider } from './services/cartContext.js';
 import { ProductProvider } from './services/productContext.js';
 import { UserProvider } from './services/userContext.js';
-import EmailConfirmation from './pages/EmailConfirmation'; // Importa el UserProvider
+import EmailConfirmation from './pages/EmailConfirmation.jsx'; // Importa el UserProvider
 
 function App() {
   return (
