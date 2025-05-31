@@ -14,7 +14,7 @@ import Profile from './pages/profile.jsx'; // Importa el componente de perfil
 import { CartProvider } from './services/cartContext.js';
 import { ProductProvider } from './services/productContext.js';
 import { UserProvider } from './services/userContext.js';
- // Importa el UserProvider
+
 
 function App() {
   return (
