@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import expressLoader from './src/loaders/express.js';
 import loaders from './src/loaders/index.js';
 import { swaggerUi, swaggerSpec } from './src/services/swaggerConfig.js';
+import userRoutes from './src/routes/userRoutes.js';
 
 // Cargar variables de entorno desde el archivo .env
 dotenv.config();
@@ -22,7 +23,7 @@ app.use((req, res, next) => {
 });
 
 //Configuracion de los servicios
-
+app.use('/api/users', userRoutes);
 loaders.init(app);
 
 export default app;
