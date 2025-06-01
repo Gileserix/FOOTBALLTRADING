@@ -5,8 +5,8 @@ footer {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  position: relative; /* Cambia a relative para que no esté fijo */
-  bottom: 0;
+  width: 100%; /* Asegura que el footer ocupe todo el ancho */
+  box-sizing: border-box; /* Incluye el padding en el ancho total */
 }
 
 footer p {
@@ -20,14 +20,11 @@ footer p {
 
 .footer-logo img {
   height: 100px;
-  margin: 0;
 }
 
 .footer-message {
   width: 100%;
   text-align: center;
-  order: 1;
-  margin-top: 1rem; /* Añade un margen superior para que el mensaje se vea más abajo */
 }
 
 .footer-social {

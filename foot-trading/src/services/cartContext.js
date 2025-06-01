@@ -5,13 +5,15 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
-  const addToCart = (item) => {
-    if (!item || !item.titulo || typeof item.precio !== 'number') {
-      console.error('Producto inválido:', item);
+  const addToCart = React.useCallback((product) => {
+    // Validar las propiedades correctas del producto
+    if (!product?.titulo || !product?.precio) {
+      console.error('Producto inválido:', product);
       return;
     }
-    setCartItems((prevItems) => [...prevItems, item]);
-  };
+
+    setCartItems((prevItems) => [...prevItems, product]);
+  }, []);
 
   const removeFromCart = React.useCallback((index) => {
     setCartItems((prevItems) => prevItems.filter((_, i) => i !== index));
@@ -21,8 +23,6 @@ export const CartProvider = ({ children }) => {
     () => ({ cartItems, addToCart, removeFromCart }),
     [cartItems, addToCart, removeFromCart]
   );
-
-  console.log('Contenido de cartItems:', cartItems);
 
   return (
     <CartContext.Provider value={value}>

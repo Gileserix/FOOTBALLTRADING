@@ -11,17 +11,16 @@ const OpcionCompra = ({ item, onClose, onFinalize }) => {
     setSelectedSize(size);
   };
 
-  const handleFinalizePurchase = () => {
-    try {
-        addToCart({ ...item, selectedSize }); // Añade el producto al carrito
-        alert('Producto añadido al carrito con éxito');
-        onFinalize(); // Cierra el modal
-    } catch (error) {
-        console.error('Error al añadir el producto al carrito:', error);
-        alert('Hubo un problema al añadir el producto al carrito.');
+  const handleFinalize = () => {
+    if (selectedSize) {
+      const productToAdd = { ...item, selectedSize };
+      console.log('Producto añadido al carrito:', productToAdd);
+      addToCart(productToAdd);
+      onFinalize();
+    } else {
+      alert('Por favor, selecciona una talla.');
     }
-};
-
+  };
 
   return (
     <div className="opcion-compra-overlay">
@@ -46,8 +45,7 @@ const OpcionCompra = ({ item, onClose, onFinalize }) => {
                 ))}
               </div>
             </div>
-            <button onClick={handleFinalizePurchase} className="finalize-button">Añadir al carrito</button>
-            <button onClick={handleFinalizePurchase} className="finalize-button">Añadir al carrito</button>
+            <button onClick={handleFinalize} className="finalize-button">Añadir al carrito</button>
           </div>
         </div>
       </div>

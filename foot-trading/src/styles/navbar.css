@@ -1,8 +1,10 @@
 header {
   background-color: #0068A8;
   padding: 1rem;
-  position: relative; /* Ensure the header is positioned relative to allow absolute positioning of the cart */
-  z-index: 1; /* Ensure the header has a lower z-index than the cart */
+  position: relative;
+  z-index: 1;
+  width: 100%; /* Asegura que el header ocupe todo el ancho */
+  box-sizing: border-box; /* Incluye el padding en el ancho total */
 }
 
 nav {
@@ -25,6 +27,7 @@ nav ul {
 
 nav ul li a {
   text-decoration: none;
+  color: white;
 }
 
 nav ul li a:hover {
