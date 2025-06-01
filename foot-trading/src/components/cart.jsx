@@ -5,7 +5,7 @@ import '../styles/cart.css';
 const Cart = () => {
   const { cartItems, removeFromCart } = useContext(CartContext);
 
-  const total = cartItems.reduce((sum, item) => sum + Number(item.precio || 0), 0);
+  const total = cartItems.reduce((sum, item) => sum + Number(item?.precio || 0), 0);
 
   return (
     <div className="cart">
