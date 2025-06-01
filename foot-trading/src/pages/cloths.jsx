@@ -17,7 +17,13 @@ function Ropa() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get('https://footballtrading.onrender.com/api/products');
+                const token = localStorage.getItem('token');
+                const response = await axios.get(
+                    'https://footballtrading.onrender.com/api/products',
+                    token
+                      ? { headers: { Authorization: `Bearer ${token}` } }
+                      : {}
+                );
                 setProducts(response.data);
             } catch (error) {
                 console.error('Error fetching products:', error);
