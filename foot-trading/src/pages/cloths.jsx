@@ -10,7 +10,6 @@ function Ropa() {
     const [itemsToShow, setItemsToShow] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
     const [showOpcionCompra, setShowOpcionCompra] = useState(false);
-    const [selectedItem] = useState(null);
     const { products, setProducts } = useContext(ProductContext);
     const { addToCart } = useContext(CartContext); // <-- Usa el método del carrito
     const defaultUserImg = 'assets/images/Unknown.jpg';
@@ -47,7 +46,7 @@ function Ropa() {
     };
 
     const handleAddToCart = (item) => {
-        addToCart(item); // <-- Añade el producto al carrito
+        addToCart(item);
         alert('Producto añadido al carrito');
     };
 
@@ -121,7 +120,6 @@ function Ropa() {
             </div>
             {showOpcionCompra && (
                 <OpcionCompra
-                    item={selectedItem}
                     onClose={handleCloseOpcionCompra}
                     onFinalize={handleFinalizePurchase}
                 />
