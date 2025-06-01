@@ -46,6 +46,7 @@ const OpcionCompra = ({ item, onClose, onFinalize }) => {
               </div>
             </div>
             <button onClick={handleFinalizePurchase} className="finalize-button">Añadir al carrito</button>
+            <button onClick={handleFinalizePurchase} className="finalize-button">Añadir al carrito</button>
           </div>
         </div>
       </div>

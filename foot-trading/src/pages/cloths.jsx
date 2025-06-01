@@ -10,7 +10,6 @@ function Ropa() {
     const [itemsToShow, setItemsToShow] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
     const [showOpcionCompra, setShowOpcionCompra] = useState(false);
-    const [selectedItem] = useState(null);
     const { products, setProducts } = useContext(ProductContext);
     const { addToCart } = useContext(CartContext); // <-- Usa el método del carrito
     const defaultUserImg = 'assets/images/Unknown.jpg';
@@ -18,7 +17,13 @@ function Ropa() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get('https://footballtrading.onrender.com/api/products');
+                const token = localStorage.getItem('token');
+                const response = await axios.get(
+                    'https://footballtrading.onrender.com/api/products',
+                    token
+                      ? { headers: { Authorization: `Bearer ${token}` } }
+                      : {}
+                );
                 setProducts(response.data);
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -47,8 +52,18 @@ function Ropa() {
     };
 
     const handleAddToCart = (item) => {
-        addToCart(item); // <-- Añade el producto al carrito
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+        addToCart(item);
         alert('Producto añadido al carrito');
+=======
+        addToCart(item); // Añade el producto al carrito
+        alert(`Producto "${item.titulo}" añadido al carrito`);
+>>>>>>> Stashed changes
+=======
+        addToCart(item); // Añade el producto al carrito
+        alert(`Producto "${item.titulo}" añadido al carrito`);
+>>>>>>> Stashed changes
     };
 
     const handleCloseOpcionCompra = () => {
@@ -121,7 +136,6 @@ function Ropa() {
             </div>
             {showOpcionCompra && (
                 <OpcionCompra
-                    item={selectedItem}
                     onClose={handleCloseOpcionCompra}
                     onFinalize={handleFinalizePurchase}
                 />
