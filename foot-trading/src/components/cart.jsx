@@ -5,7 +5,13 @@ import '../styles/cart.css';
 const Cart = () => {
   const { cartItems, removeFromCart } = useContext(CartContext);
 
-  const total = cartItems.reduce((sum, item) => sum + Number(item?.precio || 0), 0);
+  const total = cartItems.reduce((sum, item) => {
+    if (!item || typeof item.precio !== 'number') {
+        console.warn('Elemento inválido en el carrito:', item);
+        return sum; // Ignora elementos inválidos
+    }
+    return sum + item.precio; // Suma el precio si es válido
+  }, 0);
 
   return (
     <div className="cart">
