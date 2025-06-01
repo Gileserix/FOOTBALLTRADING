@@ -11,13 +11,10 @@ const OpcionCompra = ({ item, onClose, onFinalize }) => {
     setSelectedSize(size);
   };
 
-  const handleFinalize = () => {
-    if (selectedSize) {
-      addToCart({ ...item, selectedSize });
-      onFinalize();
-    } else {
-      alert('Por favor, selecciona una talla.');
-    }
+  const handleFinalizePurchase = () => {
+    addToCart({ ...item, selectedSize });
+    alert('Añadido al carrito con éxito');
+    onFinalize();
   };
 
   return (
@@ -43,7 +40,7 @@ const OpcionCompra = ({ item, onClose, onFinalize }) => {
                 ))}
               </div>
             </div>
-            <button onClick={handleFinalize} className="finalize-button">Añadir al carrito</button>
+            <button onClick={handleFinalizePurchase} className="finalize-button">Añadir al carrito</button>
           </div>
         </div>
       </div>

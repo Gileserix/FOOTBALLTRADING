@@ -5,7 +5,7 @@ import '../styles/cart.css';
 const Cart = () => {
   const { cartItems, removeFromCart } = useContext(CartContext);
 
-  const total = cartItems.reduce((sum, item) => sum + Number(item.precio || item.price || 0), 0);
+  const total = cartItems.reduce((sum, item) => sum + Number(item.precio || 0), 0);
 
   return (
     <div className="cart">
@@ -16,12 +16,12 @@ const Cart = () => {
         <>
           <ul>
             {cartItems.map((item, index) => (
-              <li key={item.id || item._id || (item.titulo || item.title) + '-' + index} className="cart-item">
-                <img src={item.imagenesAdjuntas?.[0] || item.imgSrc} alt={item.titulo || item.title} className="cart-item-img" />
+              <li key={item._id || index} className="cart-item">
+                <img src={item.imagenesAdjuntas?.[0]} alt={item.titulo} className="cart-item-img" />
                 <div className="cart-item-details">
-                  <h3>{item.titulo || item.title}</h3>
+                  <h3>{item.titulo}</h3>
+                  <p>Precio: {item.precio} €</p>
                   {item.talla && <p>Talla: {item.talla}</p>}
-                  <p>Precio: {item.precio || item.price} €</p>
                 </div>
                 <button className="remove-button" onClick={() => removeFromCart(index)}>Eliminar</button>
               </li>
