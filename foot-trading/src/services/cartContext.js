@@ -5,16 +5,21 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
-  const addToCart = (item) => {
-    setCartItems([...cartItems, item]);
-  };
+  const addToCart = React.useCallback((item) => {
+    setCartItems((prevItems) => [...prevItems, item]); // Actualiza el estado del carrito
+  }, []);
 
-  const removeFromCart = (index) => {
-    setCartItems(cartItems.filter((_, i) => i !== index));
-  };
+  const removeFromCart = React.useCallback((index) => {
+    setCartItems((prevItems) => prevItems.filter((_, i) => i !== index));
+  }, []);
+
+  const value = React.useMemo(
+    () => ({ cartItems, addToCart, removeFromCart }),
+    [cartItems, addToCart, removeFromCart]
+  );
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
+    <CartContext.Provider value={value}>
       {children}
     </CartContext.Provider>
   );
