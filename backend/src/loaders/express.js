@@ -11,7 +11,7 @@ export default (app) => {
     app.use(express.urlencoded({ extended: true }));
 
     const corsOptions = {
-        origin: ['*'], // Permitir solicitudes desde estos orígenes
+        origin: ['https://footballtrading.onrender.com', 'https://footballtrading.vercel.app'], // Agregar el dominio de Vercel
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
         allowedHeaders: "Content-Type,Authorization",
         credentials: true // Permitir el uso de cookies o credenciales

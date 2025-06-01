@@ -1,40 +1,66 @@
 import User from '../models/user.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-
-const secretKey = process.env.JWT_SECRET || 'your_secret_key';
+import { sendVerificationEmail } from '../services/emailService.js';
+import { Product } from '../models/product.js';
 
 export const createUserController = async (req, res) => {
     const { username, password, email, firstName, lastName, birthDate, address } = req.body;
 
     try {
-        // Verificar si el nombre de usuario o el correo electrónico ya existen
+        // Verificar si el usuario o correo ya existen
         const existingUser = await User.findOne({ $or: [{ username: username.toLowerCase() }, { email: email.toLowerCase() }] });
         if (existingUser) {
-            return res.status(400).json({ message: 'El nombre de usuario o el correo electrónico ya están en uso' });
+            return res.status(400).json({ message: 'El nombre de usuario o correo ya están en uso' });
+        }
+
+        // Validar el formato del correo electrónico
+        const emailRegex = /^[^\s@]+@[^\s@]+\.(com|es)$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({
+                message: 'El correo electrónico debe contener "@" y terminar en ".com" o ".es".',
+            });
+        }
+
+        // Validar la contraseña
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,12}$/;
+        if (!passwordRegex.test(password)) {
+            return res.status(400).json({
+                message: 'La contraseña debe contener al menos una mayúscula, una minúscula, un número y tener entre 8 y 12 caracteres.',
+            });
         }
 
         // Encriptar la contraseña
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Crear un nuevo usuario
+        // Crear un nuevo usuario con los datos en minúsculas
         const newUser = new User({
             username: username.toLowerCase(),
             password: hashedPassword,
             email: email.toLowerCase(),
-            firstName,
-            lastName,
+            firstName: firstName.toLowerCase(),
+            lastName: lastName.toLowerCase(),
             birthDate,
-            address
+            address: address.toLowerCase(),
+            isVerified: false,
         });
 
-        // Guardar el usuario en la base de datos
         await newUser.save();
 
-        res.status(201).json({ message: 'Usuario creado exitosamente', user: newUser });
+        // Generar token de verificación con la contraseña encriptada
+        const token = jwt.sign(
+            { id: newUser._id, email: newUser.email, password: newUser.password },
+            newUser.password, // clave secreta única por usuario
+            { expiresIn: '1h' }
+        );
+
+        // Enviar correo de verificación
+        await sendVerificationEmail(newUser.email, token);
+
+        res.status(201).json({ message: 'Usuario creado. Verifica tu correo electrónico.', user: newUser });
     } catch (error) {
         console.error('Error al crear el usuario:', error);
-        res.status(400).json({ message: 'Error al crear el usuario', error: error.message });
+        res.status(500).json({ message: 'Error al crear el usuario' });
     }
 };
 
@@ -44,12 +70,19 @@ export const loginUserController = async (req, res) => {
     try {
         // Buscar el usuario por nombre de usuario
         const user = await User.findOne({ username: username.toLowerCase() });
+
         if (!user) {
             return res.status(400).json({ message: 'Nombre de usuario o contraseña incorrectos' });
         }
 
-        // Verificar la contraseña
+        // Verificar si el correo está verificado
+        if (!user.isVerified) {
+            return res.status(403).json({ message: 'Por favor, verifica tu correo electrónico antes de iniciar sesión.' });
+        }
+
+        // Comparar la contraseña
         const isMatch = await bcrypt.compare(password, user.password);
+
         if (!isMatch) {
             return res.status(400).json({ message: 'Nombre de usuario o contraseña incorrectos' });
         }
@@ -99,8 +132,41 @@ export const deleteUserController = async (req, res) => {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
 
-        res.status(200).json({ message: 'Usuario borrado exitosamente', user: deletedUser });
+        // Eliminar los productos asociados al usuario
+        await Product.deleteMany({ createdBy: id });
+
+        res.status(200).json({ message: 'Usuario y sus productos asociados eliminados exitosamente', user: deletedUser });
     } catch (error) {
         res.status(400).json({ message: 'Error al borrar el usuario', error: error.message });
+    }
+};
+
+export const verifyEmailController = async (req, res) => {
+    const { token } = req.query;
+
+    try {
+        // 1. Decodifica el token para obtener el id
+        const decoded = jwt.decode(token);
+        if (!decoded?.id) {
+            return res.status(400).json({ message: 'Token inválido.' });
+        }
+
+        // 2. Busca el usuario
+        const user = await User.findById(decoded.id);
+        if (!user) {
+            return res.status(404).json({ message: 'Usuario no encontrado.' });
+        }
+
+        // 3. Verifica el token usando la contraseña encriptada como clave
+        jwt.verify(token, user.password);
+
+        // 4. Marca el usuario como verificado
+        user.isVerified = true;
+        await user.save();
+
+        res.status(200).json({ message: 'Correo verificado exitosamente.' });
+    } catch (error) {
+        console.error('Error al verificar el correo:', error);
+        res.status(400).json({ message: 'Token inválido o expirado.' });
     }
 };

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import upload from '../services/multerConfig.js';
-import { createUserController, deleteUserController, loginUserController, getUserProfileController } from '../controllers/userController.js';
+import { createUserController, deleteUserController, loginUserController, getUserProfileController,verifyEmailController } from '../controllers/userController.js';
 import { createProductController, deleteProductController, updateProductController } from '../controllers/productController.js';
 import { Product } from '../models/product.js'; // Asegúrate de importar el modelo Product
 
@@ -329,5 +329,7 @@ router.delete('/products/:id', deleteProductController);
  *         description: Error al actualizar el producto
  */
 router.put('/products/:id', updateProductController);
+
+router.get('/verify-email', verifyEmailController);
 
 export default router;

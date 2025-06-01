@@ -13,7 +13,9 @@ const OpcionCompra = ({ item, onClose, onFinalize }) => {
 
   const handleFinalize = () => {
     if (selectedSize) {
-      addToCart({ ...item, selectedSize });
+      const productToAdd = { ...item, selectedSize };
+      console.log('Producto añadido al carrito:', productToAdd);
+      addToCart(productToAdd);
       onFinalize();
     } else {
       alert('Por favor, selecciona una talla.');

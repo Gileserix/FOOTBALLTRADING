@@ -1,57 +1,65 @@
 .cart {
-    padding: 5px;
+    padding: 20px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
     margin-top: 20px;
-    max-width: 600px;
-    margin-right: 25px;
-    max-height: 400px; /* Limita la altura del carrito */
-    overflow-y: auto; /* Permite el desplazamiento vertical */
-    overflow-x: hidden; /* Elimina el desplazamiento horizontal */
+    max-width: 1200px; /* Aumentar el ancho máximo del carrito */
+    margin: 0 auto;
+    max-height: 500px; /* Limitar la altura del carrito */
+    overflow-y: auto; /* Habilitar el scroll vertical */
+    overflow-x: hidden; /* Evitar que los elementos excedan el ancho */
+    box-sizing: border-box; /* Incluir padding y border en el ancho total */
   }
   
   .cart h2 {
-    margin-bottom: 20px;
     text-align: center;
+    margin-bottom: 20px;
   }
   
   .cart-item {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
-    padding: 10px;
+    justify-content: space-between;
     border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+    overflow: hidden; /* Evitar que los elementos internos excedan el ancho */
   }
   
   .cart-item-img {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-    border-radius: 5px;
+    width: 75px; /* Aumentar el tamaño de las imágenes para adaptarse al nuevo ancho */
+    height: 75px;
+    object-fit: cover; /* Asegura que las imágenes tengan la misma resolución */
+    border-radius: 8px;
+    margin-right: 20px;
   }
   
   .cart-item-details {
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden; /* Evitar que los textos largos excedan el ancho */
   }
   
   .cart-item-details h3 {
     margin: 0;
-    font-size: 14px; /* Reduce el tamaño de la fuente del título del artículo */
+    font-size: 18px; /* Ajustar el tamaño de la fuente para el nuevo ancho */
+    white-space: nowrap; /* Evitar que los textos largos se desborden */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Mostrar "..." si el texto es demasiado largo */
   }
   
   .cart-item-details p {
     margin: 5px 0;
-    font-size: 14px;
-  }
-  
-  .cart-item-details p.price {
-    font-weight: bold;
-    color: #333;
+    font-size: 16px; /* Ajustar el tamaño de la fuente para el nuevo ancho */
+    white-space: nowrap; /* Evitar que los textos largos se desborden */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Mostrar "..." si el texto es demasiado largo */
   }
   
   .remove-button {
-    padding: 5px 10px;
+    padding: 10px 15px;
     border: none;
     border-radius: 4px;
     background-color: #ff4d4d;
@@ -64,7 +72,7 @@
   }
   
   .cart-total {
-    text-align: center; /* Centra el texto del total */
+    text-align: center;
     margin-top: 20px;
   }
   
@@ -77,7 +85,6 @@
     background-color: #007bff;
     color: white;
     cursor: pointer;
-    margin-top: 20px;
   }
   
   .checkout-button:hover {
