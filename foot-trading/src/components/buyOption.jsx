@@ -22,6 +22,7 @@ const OpcionCompra = ({ item, onClose, onFinalize }) => {
     }
 };
 
+
   return (
     <div className="opcion-compra-overlay">
       <div className="opcion-compra">

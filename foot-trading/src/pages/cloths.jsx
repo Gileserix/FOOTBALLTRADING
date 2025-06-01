@@ -24,9 +24,10 @@ function Ropa() {
                       ? { headers: { Authorization: `Bearer ${token}` } }
                       : {}
                 );
+                console.log('Productos obtenidos:', response.data);
                 setProducts(response.data);
             } catch (error) {
-                console.error('Error fetching products:', error);
+                console.error('Error al obtener los productos:', error);
             }
         };
 

@@ -8,10 +8,10 @@ const Cart = () => {
   const total = cartItems.reduce((sum, item) => {
     if (!item || typeof item.precio !== 'number') {
         console.warn('Elemento inválido en el carrito:', item);
-        return sum; // Ignora elementos inválidos
+        return sum;
     }
-    return sum + item.precio; // Suma el precio si es válido
-  }, 0);
+    return sum + item.precio;
+}, 0);
 
   return (
     <div className="cart">
