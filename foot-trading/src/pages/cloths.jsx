@@ -3,31 +3,23 @@ import axios from 'axios';
 import '../styles/cloths.css';
 import OpcionCompra from '../components/buyOption';
 import { ProductContext } from '../services/productContext.js';
-import { CartContext } from '../services/cartContext.js'; // <-- Importa el contexto del carrito
 
 function Ropa() {
     const [searchTerm, setSearchTerm] = useState('');
     const [itemsToShow, setItemsToShow] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
     const [showOpcionCompra, setShowOpcionCompra] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
     const { products, setProducts } = useContext(ProductContext);
-    const { addToCart } = useContext(CartContext); // <-- Usa el método del carrito
     const defaultUserImg = 'assets/images/Unknown.jpg';
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const token = localStorage.getItem('token');
-                const response = await axios.get(
-                    'https://footballtrading.onrender.com/api/products',
-                    token
-                      ? { headers: { Authorization: `Bearer ${token}` } }
-                      : {}
-                );
-                console.log('Productos obtenidos:', response.data);
+                const response = await axios.get('https://footballtrading.onrender.com/api/products');
                 setProducts(response.data);
             } catch (error) {
-                console.error('Error al obtener los productos:', error);
+                console.error('Error fetching products:', error);
             }
         };
 
@@ -53,9 +45,8 @@ function Ropa() {
     };
 
     const handleAddToCart = (item) => {
-        console.log('Producto añadido al carrito:', item);
-        addToCart(item); // Añade el producto al carrito
-        alert(`Producto "${item.titulo}" añadido al carrito`);
+        setSelectedItem(item);
+        setShowOpcionCompra(true);
     };
 
     const handleCloseOpcionCompra = () => {
@@ -128,6 +119,7 @@ function Ropa() {
             </div>
             {showOpcionCompra && (
                 <OpcionCompra
+                    item={selectedItem}
                     onClose={handleCloseOpcionCompra}
                     onFinalize={handleFinalizePurchase}
                 />
