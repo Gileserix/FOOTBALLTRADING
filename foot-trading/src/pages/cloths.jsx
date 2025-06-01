@@ -53,8 +53,13 @@ function Ropa() {
 
     const handleAddToCart = (item) => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         addToCart(item);
         alert('Producto añadido al carrito');
+=======
+        addToCart(item); // Añade el producto al carrito
+        alert(`Producto "${item.titulo}" añadido al carrito`);
+>>>>>>> Stashed changes
 =======
         addToCart(item); // Añade el producto al carrito
         alert(`Producto "${item.titulo}" añadido al carrito`);
