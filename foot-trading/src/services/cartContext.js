@@ -5,9 +5,13 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
-  const addToCart = React.useCallback((item) => {
-    setCartItems((prevItems) => [...prevItems, item]); // Actualiza el estado del carrito
-  }, []);
+const addToCart = React.useCallback((item) => {
+  if (!item || typeof item.precio !== 'number') {
+      console.error('El producto no tiene un precio válido:', item);
+      return;
+  }
+  setCartItems((prevItems) => [...prevItems, item]);
+}, []);
 
   const removeFromCart = React.useCallback((index) => {
     setCartItems((prevItems) => prevItems.filter((_, i) => i !== index));
@@ -17,6 +21,8 @@ export const CartProvider = ({ children }) => {
     () => ({ cartItems, addToCart, removeFromCart }),
     [cartItems, addToCart, removeFromCart]
   );
+
+  console.log('Contenido de cartItems:', cartItems);
 
   return (
     <CartContext.Provider value={value}>

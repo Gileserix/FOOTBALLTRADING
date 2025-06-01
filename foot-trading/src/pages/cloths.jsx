@@ -52,11 +52,9 @@ function Ropa() {
     };
 
     const handleAddToCart = (item) => {
-
-
+        console.log('Producto añadido al carrito:', item);
         addToCart(item); // Añade el producto al carrito
         alert(`Producto "${item.titulo}" añadido al carrito`);
-
     };
 
     const handleCloseOpcionCompra = () => {
