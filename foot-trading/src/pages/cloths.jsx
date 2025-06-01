@@ -45,17 +45,8 @@ function Ropa() {
     };
 
     const handleAddToCart = (item) => {
-        setSelectedItem(item);
-        setShowOpcionCompra(true);
-    };
-
-    const handleCloseOpcionCompra = () => {
-        setShowOpcionCompra(false);
-    };
-
-    const handleFinalizePurchase = () => {
-        alert('Añadido al carrito con éxito');
-        setShowOpcionCompra(false);
+        setSelectedItem(item); // Establece el producto seleccionado
+        setShowOpcionCompra(true); // Muestra el modal de compra
     };
 
     return (
@@ -120,8 +111,8 @@ function Ropa() {
             {showOpcionCompra && (
                 <OpcionCompra
                     item={selectedItem}
-                    onClose={handleCloseOpcionCompra}
-                    onFinalize={handleFinalizePurchase}
+                    onClose={() => setShowOpcionCompra(false)}
+                    onFinalize={() => setShowOpcionCompra(false)}
                 />
             )}
         </div>
