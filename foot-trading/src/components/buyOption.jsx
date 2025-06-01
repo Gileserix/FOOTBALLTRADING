@@ -13,13 +13,14 @@ const OpcionCompra = ({ item, onClose, onFinalize }) => {
 
   const handleFinalize = () => {
     if (selectedSize) {
-        const productToAdd = { ...item, selectedSize }; // Incluye la talla seleccionada
-        addToCart(productToAdd); // Añade el producto al carrito
-        onFinalize(); // Cierra el modal
+      const productToAdd = { ...item, selectedSize };
+      console.log('Producto añadido al carrito:', productToAdd);
+      addToCart(productToAdd);
+      onFinalize();
     } else {
-        alert('Por favor, selecciona una talla.');
+      alert('Por favor, selecciona una talla.');
     }
-};
+  };
 
   return (
     <div className="opcion-compra-overlay">
