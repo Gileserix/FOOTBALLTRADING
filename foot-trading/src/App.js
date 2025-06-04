@@ -10,7 +10,7 @@ import Accesorios from './pages/accessories.jsx';
 import Register from './pages/register.jsx';
 import Login from './components/login.jsx'; // Importa el componente de inicio de sesión
 import Profile from './pages/profile.jsx'; // Importa el componente de perfil
-import MyProducts from './pages/myProducts';
+import MyProducts from './pages/myProducts.jsx';
 import { CartProvider } from './services/cartContext.js';
 import { ProductProvider } from './services/productContext.js';
 import { UserProvider } from './services/userContext.js'; // Importa el UserProvider
