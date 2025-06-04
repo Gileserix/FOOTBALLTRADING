@@ -12,7 +12,7 @@ const MyProducts = () => {
     useEffect(() => {
         const fetchMyProducts = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/api/products', {
+                const response = await axios.get('https://footballtrading.onrender.com/api/products', {
                     params: { createdBy: user }
                 });
                 setProducts(response.data);
