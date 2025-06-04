@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
-import axios from 'axios';
+
+import api from '../services/axiosConfig';
 import '../styles/createYourProduct.css';
 import { ProductContext } from '../services/productContext.js';
 
@@ -54,16 +55,11 @@ const CreaTuProducto = () => {
 
     try {
       // Crear producto en la base de datos
-      const response = await axios.post(
-        'https://footballtrading.onrender.com/api/upload-product',
-        data,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-          withCredentials: true, // Incluir credenciales en la solicitud
+      const response = await api.post('http://localhost:3000/api/upload-product', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
         }
-      );
+      });
 
       alert('Producto añadido exitosamente');
       addProduct(response.data.product); // Añadir el producto al contexto global

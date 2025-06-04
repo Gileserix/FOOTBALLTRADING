@@ -10,7 +10,6 @@ import mongoose from 'mongoose';
  *         - titulo
  *         - precio
  *         - descripcion
- *         - createdBy
  *       properties:
  *         id:
  *           type: string
@@ -28,9 +27,6 @@ import mongoose from 'mongoose';
  *           type: string
  *           format: date-time
  *           description: Fecha de creación del producto
- *         createdBy:
- *           type: string
- *           description: ID del usuario que creó el producto
  *         talla:
  *           type: string
  *           description: Talla del producto (solo para ropa)
@@ -51,26 +47,59 @@ import mongoose from 'mongoose';
  *           description: URLs de las imágenes adjuntas
  */
 const productSchema = new mongoose.Schema({
-    titulo: { type: String, required: true, trim: true },
-    precio: { type: Number, required: true },
-    descripcion: { type: String, required: true, trim: true },
-    imagenesAdjuntas: { type: [String], required: true },
-    createdAt: { type: Date, default: Date.now },
-    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    titulo: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    precio: {
+        type: Number,
+        required: true
+    },
+    descripcion: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    imagenesAdjuntas: {
+        type: [String], // Array de strings para las URLs de las imágenes
+        required: true
+    },
+    createdBy: {
+        type: String,
+        required: true // El usuario que creó el producto
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 }, { discriminatorKey: 'tipo' });
 
 const Product = mongoose.model('Product', productSchema);
 
+// Discriminador para ropa
 const Ropa = Product.discriminator('Ropa', new mongoose.Schema({
-    talla: { type: String, required: true },
+    talla: {
+        type: String,
+        required: true
+    }
 }));
 
+// Discriminador para cartas
 const Carta = Product.discriminator('Carta', new mongoose.Schema({
-    certificadoAutenticidad: { type: Boolean, required: true },
+    certificadoAutenticidad: {
+        type: Boolean,
+        required: true
+    }
 }));
 
+// Discriminador para accesorios
 const Accesorio = Product.discriminator('Accesorio', new mongoose.Schema({
-    categoria: { type: String, enum: ['Balones', 'Espinilleras', 'Otro'], required: true },
+    categoria: {
+        type: String,
+        enum: ['Balones', 'Espinilleras', 'Otro'],
+        required: true
+    }
 }));
 
 export { Product, Ropa, Carta, Accesorio };

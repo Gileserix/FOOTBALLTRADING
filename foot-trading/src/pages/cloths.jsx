@@ -16,7 +16,9 @@ function Ropa() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
+
                 const response = await axios.get('https://footballtrading.onrender.com/api/products');
+              
                 setProducts(response.data);
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -87,7 +89,7 @@ function Ropa() {
                         </div>
                         <div className="info-box uploader">
                             <img src={defaultUserImg} alt="Uploader" />
-                            <p>Subido por: {item.uploader}</p>
+                            <p>Subido por: <br></br>{item.createdBy}</p>
                         </div>
                     </div>
                     <button onClick={() => handleAddToCart(item)}>Añadir al carrito</button>
