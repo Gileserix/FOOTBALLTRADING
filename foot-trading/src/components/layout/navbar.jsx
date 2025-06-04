@@ -16,11 +16,7 @@ const Navbar = () => {
       <div className="top-nav">
         <div className="logo">
           <img src="../../assets/images/LogoPeque.png" alt="Logo Pequeño" className="small-logo" />
-          <h1>Foot Trading</h1>
-        </div>
-        <div className="search-container">
-          <i className="search-icon">🔍</i>
-          <input type="text" id="search" className="search-input" placeholder="Buscar..." />
+          <h1>Football Trading</h1>
         </div>
         <div className="icons">
           <button className="icon icon1" onClick={() => setShowLogin(!showLogin)}><img src="../../assets/iconos/Login.png" alt="Icon1" /></button>

@@ -1,8 +1,9 @@
 import { Router } from 'express';
 import upload from '../services/multerConfig.js';
-import { createUserController, deleteUserController, loginUserController, getUserProfileController,verifyEmailController } from '../controllers/userController.js';
+import { updateUserController, createUserController, deleteUserController, loginUserController, getUserProfileController } from '../controllers/userController.js';
 import { createProductController, deleteProductController, updateProductController } from '../controllers/productController.js';
 import { Product } from '../models/product.js'; // Asegúrate de importar el modelo Product
+import authMiddleware from '../middleware/authMiddleware.js';
 
 const router = Router();
 
@@ -133,6 +134,8 @@ router.post('/login', loginUserController);
  */
 router.get('/users/profile', getUserProfileController);
 
+router.put('/users/profile', updateUserController);
+
 /**
  * @swagger
  * /upload-product:
@@ -180,7 +183,7 @@ router.get('/users/profile', getUserProfileController);
  *       400:
  *         description: Error al crear el producto
  */
-router.post('/upload-product', upload.array('imagenesAdjuntas', 10), createProductController);
+router.post('/upload-product', upload.array('imagenesAdjuntas', 10), authMiddleware, createProductController);
 
 /**
  * @swagger
@@ -329,7 +332,5 @@ router.delete('/products/:id', deleteProductController);
  *         description: Error al actualizar el producto
  */
 router.put('/products/:id', updateProductController);
-
-router.get('/verify-email', verifyEmailController);
 
 export default router;

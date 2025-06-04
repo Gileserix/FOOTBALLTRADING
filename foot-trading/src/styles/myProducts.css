@@ -1,0 +1,118 @@
+:root {
+    --gap: 10px;
+    --padding: 20px;
+    --border-color: #ddd;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --item-width: 100%;
+    --item-max-width: 1200px;
+    --item-height: 150px;
+    --image-width: 120px;
+    --image-border-radius: 8px;
+    --image-margin-right: 20px;
+    --button-bg-color: #007bff;
+    --button-hover-bg-color: #0056b3;
+}
+
+.my-products-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap);
+    padding: var(--padding);
+    width: var(--item-width);
+}
+
+.products-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra los divs horizontalmente */
+    gap: var(--gap);
+    width: var(--item-width);
+}
+
+.product-item {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--padding);
+    width: var(--item-width);
+    max-width: var(--item-max-width);
+    height: var(--item-height);
+    box-shadow: var(--box-shadow);
+    position: relative;
+}
+
+.product-item img {
+    width: var(--image-width);
+    height: auto;
+    border-radius: var(--image-border-radius);
+    margin-right: var(--image-margin-right);
+}
+
+.product-item-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    gap: var(--gap);
+}
+
+.product-item-info h3 {
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.product-item-info p {
+    font-size: 1em;
+    color: #555;
+    margin: 0;
+}
+
+.product-item-buttons {
+    display: flex;
+    gap: var(--gap);
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}
+
+.product-item button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: var(--button-bg-color);
+    color: white;
+    cursor: pointer;
+}
+
+.product-item button:hover {
+    background-color: var(--button-hover-bg-color);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap);
+    margin-top: var(--padding);
+}
+
+.pagination button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: var(--button-bg-color);
+    color: white;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: var(--button-hover-bg-color);
+}
+
+.pagination .disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

@@ -20,8 +20,9 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://footballtrading.onrender.com/api/login', formData);
+            const response = await axios.post('http://localhost:3000/api/login', formData);
             alert('Inicio de sesión exitoso');
+            localStorage.setItem('token', response.data.token);
             setUser(response.data.user.username);
         } catch (error) {
             console.error('Error al iniciar sesión:', error);
@@ -31,11 +32,16 @@ const Login = () => {
 
     const handleLogout = () => {
         setUser(null);
-        alert('Has cerrado sesión');
+        localStorage.removeItem('token'); // Elimina el token del almacenamiento local
+        alert('Sesión cerrada exitosamente');
     };
 
     const handleProfile = () => {
         navigate('/profile');
+    };
+
+    const handleMyProducts = () => {
+        navigate('/my-products'); // Redirige a la página de "Mis Productos"
     };
 
     return (
@@ -44,6 +50,7 @@ const Login = () => {
                 <div>
                     <p>Has iniciado sesión como {user}</p>
                     <button className='login-button' onClick={handleProfile}>Mi Perfil</button>
+                    <button className='login-button' onClick={handleMyProducts}>Mis Productos</button>
                     <button className='login-button' onClick={handleLogout}>Cerrar Sesión</button>
                 </div>
             ) : (

@@ -2,24 +2,26 @@ import { Product, Ropa, Carta, Accesorio } from '../models/product.js';
 
 export const createProductController = async (req, res) => {
     const { titulo, precio, descripcion, tipo, talla, certificadoAutenticidad, categoria } = req.body;
+    const createdBy = req.user?.username || 'Unknown'; // Asume que el usuario está disponible en req.user
 
     try {
+        // Obtener las URLs de las imágenes subidas a Cloudinary
         const imagenesAdjuntas = req.files ? req.files.map(file => file.path) : [];
 
-        console.log('Datos recibidos:', { titulo, precio, descripcion, tipo, talla, certificadoAutenticidad, categoria });
-        console.log('Imagenes adjuntas:', imagenesAdjuntas);
+        console.log('Datos recibidos:', { titulo, precio, descripcion, tipo, talla, certificadoAutenticidad, categoria, imagenesAdjuntas, createdBy });
 
         let newProduct;
         if (tipo === 'Ropa') {
-            newProduct = new Ropa({ titulo, precio, descripcion, imagenesAdjuntas, talla: talla.toUpperCase(), createdBy: req.user.id });
+            newProduct = new Ropa({ titulo, precio, descripcion, imagenesAdjuntas, talla: talla.toUpperCase(), createdBy });
         } else if (tipo === 'Carta') {
-            newProduct = new Carta({ titulo, precio, descripcion, imagenesAdjuntas, certificadoAutenticidad, createdBy: req.user.id });
+            newProduct = new Carta({ titulo, precio, descripcion, imagenesAdjuntas, certificadoAutenticidad, createdBy });
         } else if (tipo === 'Accesorio') {
-            newProduct = new Accesorio({ titulo, precio, descripcion, imagenesAdjuntas, categoria, createdBy: req.user.id });
+            newProduct = new Accesorio({ titulo, precio, descripcion, imagenesAdjuntas, categoria, createdBy });
         } else {
             return res.status(400).json({ message: 'Tipo de producto no válido' });
         }
 
+        // Guardar el producto en la base de datos
         await newProduct.save();
 
         res.status(201).json({ message: 'Producto creado exitosamente', product: newProduct });
@@ -33,6 +35,7 @@ export const deleteProductController = async (req, res) => {
     const { id } = req.params;
 
     try {
+        // Buscar y eliminar el producto por ID
         const deletedProduct = await Product.findByIdAndDelete(id);
 
         if (!deletedProduct) {
@@ -69,4 +72,18 @@ export const updateProductController = async (req, res) => {
     } catch (error) {
         res.status(400).json({ message: 'Error al actualizar el producto', error: error.message });
     }
+};
+
+export const getProductController = async (req, res) => {
+  try {
+    const products = await Product.find();
+    if (!products) {
+      return res.status(404).json({ message: 'No se encontraron productos' });
+    }
+
+    res.status(200).json(products);
+  } catch (error) {
+    console.error('Error al obtener productos:', error);
+    res.status(500).json({ message: 'Error al obtener productos', error: error.message });
+  }
 };

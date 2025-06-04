@@ -19,3 +19,28 @@
 .profile-info p {
     margin: 10px 0;
 }
+
+.profile-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.profile-row p {
+    margin: 0;
+    flex: 1;
+}
+
+.profile-row button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.profile-row button:hover {
+    background-color: #0056b3;
+}
