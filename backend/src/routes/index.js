@@ -3,7 +3,7 @@ import upload from '../services/multerConfig.js';
 import { updateUserController, createUserController, deleteUserController, loginUserController, getUserProfileController } from '../controllers/userController.js';
 import { createProductController, deleteProductController, updateProductController } from '../controllers/productController.js';
 import { Product } from '../models/product.js'; // Asegúrate de importar el modelo Product
-import authMiddleware from '../middleware/authMiddleware.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
 
 const router = Router();
 
