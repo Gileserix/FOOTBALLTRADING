@@ -2,9 +2,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px; /* Reduced gap */
+    gap: 20px; /* Espaciado entre los divs */
     padding: 20px;
-    width: 100%;
 }
 
 .ropa-item {
@@ -13,19 +12,18 @@
     justify-content: space-between;
     border: 1px solid #ddd;
     border-radius: 8px;
-    padding: 10px;
+    padding: 20px; /* Espaciado interno uniforme */
     width: 100%;
     max-width: 1200px;
-    height: 150px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
+    height: auto; /* Ajusta la altura automáticamente */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Añade sombra para destacar los divs */
 }
 
 .ropa-item img {
     width: 100px;
     height: auto;
     border-radius: 8px;
-    margin-right: 20px;
+    margin-right: 20px; /* Espaciado uniforme entre la imagen y el contenido */
 }
 
 .ropa-item-info {
@@ -34,7 +32,7 @@
     justify-content: center;
     align-items: center;
     flex-grow: 1;
-    gap: 70px; /* Reduced gap */
+    gap: 70px;
 }
 
 .ropa-item-info .info-box {
@@ -49,14 +47,14 @@
 
 .ropa-item-info .title-box {
     max-width: 300px;
-    margin-left: -20px; /* Special margin to be closer to the image */
+    margin-left: -20px;
     display: flex;
-    align-items: center; /* Ensure titles are vertically centered */
+    align-items: center;
 }
 
 .ropa-item-info .price-box {
     display: flex;
-    flex-direction: column; /* Ensure prices are displayed one above the other */
+    flex-direction: column;
 }
 
 .ropa-item-info h3 {
@@ -64,7 +62,7 @@
     margin: 0;
 }
 
-.ropa-item-info .price {
+.ropa-item-info p {
     font-size: 1em;
     color: #555;
     margin: 0;
@@ -97,10 +95,7 @@
     background-color: #007bff;
     color: white;
     cursor: pointer;
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
+    margin-left: 20px; /* Espaciado uniforme entre el botón y el contenido */
 }
 
 .ropa-item button:hover {
@@ -157,4 +152,45 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     background-color: #f9f9f9;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .ropa-container {
+    padding: 10px;
+    gap: 30px; /* Aumenta el espaciado entre los divs */
+  }
+
+  .ropa-item {
+    flex-direction: column; /* Cambia la dirección a columna */
+    align-items: center;
+    text-align: center;
+    width: 100%; /* Asegura que ocupe todo el ancho */
+    padding: 15px; /* Ajusta el espaciado interno */
+  }
+
+  .ropa-item img {
+    width: 80px; /* Reduce el tamaño de la imagen */
+    height: auto;
+    margin-bottom: 15px; /* Espaciado entre la imagen y el contenido */
+  }
+
+  .ropa-item-info {
+    margin-left: 0; /* Elimina el margen izquierdo */
+    text-align: center; /* Centra el texto */
+    gap: 10px; /* Reduce el espacio entre los elementos internos */
+  }
+
+  .ropa-item-info h3 {
+    font-size: 1rem; /* Reduce el tamaño del título */
+  }
+
+  .ropa-item-info p {
+    font-size: 0.9rem; /* Reduce el tamaño del texto */
+  }
+
+  .ropa-item button {
+    margin-top: 15px; /* Añade espacio superior */
+    width: 100%; /* Ajusta el ancho del botón */
+  }
 }

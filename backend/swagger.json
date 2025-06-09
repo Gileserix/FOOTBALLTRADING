@@ -462,6 +462,105 @@
           }
         }
       }
+    },
+    "/create-payment-intent": {
+      "post": {
+        "summary": "Crear un PaymentIntent para Stripe",
+        "tags": [
+          "Payments"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cartItems": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string"
+                        },
+                        "titulo": {
+                          "type": "string"
+                        },
+                        "precio": {
+                          "type": "number"
+                        },
+                        "quantity": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "PaymentIntent creado exitosamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "clientSecret": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error al crear el PaymentIntent"
+          }
+        }
+      }
+    },
+    "/payment-success": {
+      "post": {
+        "summary": "Confirmar el éxito del pago y eliminar productos comprados",
+        "tags": [
+          "Payments"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cartItems": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Productos eliminados exitosamente"
+          },
+          "500": {
+            "description": "Error al eliminar productos"
+          }
+        }
+      }
     }
   },
   "components": {

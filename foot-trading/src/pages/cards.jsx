@@ -1,7 +1,9 @@
-import React, { useState, useContext } from 'react';
-import '../styles/cards.css';
-import OpcionCompra from '../components/buyOption';
+import React, { useState, useContext, useEffect } from 'react';
+import axios from 'axios';
+import '../styles/cloths.css';
+import OpcionCompra from '../components/productDetails.jsx';
 import { ProductContext } from '../services/productContext.js';
+import { useNavigate } from 'react-router-dom';
 
 function Cartas() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -9,8 +11,22 @@ function Cartas() {
     const [currentPage, setCurrentPage] = useState(1);
     const [showOpcionCompra, setShowOpcionCompra] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
-    const { products } = useContext(ProductContext);
+    const { products, setProducts } = useContext(ProductContext);
+    const navigate = useNavigate();
     const defaultUserImg = 'assets/images/Unknown.jpg';
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/api/products');
+                setProducts(response.data);
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        };
+
+        fetchProducts();
+    }, [setProducts]);
 
     const items = products.filter(product => product.tipo === 'Carta');
 
@@ -44,8 +60,12 @@ function Cartas() {
         setShowOpcionCompra(false);
     };
 
+        const handleViewProfile = (username) => {
+        navigate(`/profile?username=${username}`); // Redirigir a la página de perfil del usuario
+    };
+
     return (
-        <div className="cartas-container">
+        <div className="ropa-container">
             <input
                 type="text"
                 className="search-bar"
@@ -57,19 +77,26 @@ function Cartas() {
                 }}
             />
             {paginatedItems.map(item => (
-                <div key={item._id} className="cartas-item">
+                <div key={item._id} className="ropa-item">
                     <img src={item.imagenesAdjuntas[0]} alt={item.titulo} />
-                    <div className="cartas-item-info">
+                    <div className="ropa-item-info">
                         <div className="info-box title-box">
                             <h3>{item.titulo}</h3>
                         </div>
                         <div className="info-box price-box">
                             <p className="price-title">Precio</p>
-                            <p className="price">€{item.precio}</p>
+                            <p className="price">{item.precio} €</p>
+                        </div>
+                        <div className="info-box">
+                            <p className="price-title">Certificado</p>
+                            <p className="price">{item.certificadoAutenticidad}</p>
                         </div>
                         <div className="info-box uploader">
                             <img src={defaultUserImg} alt="Uploader" />
-                            <p>Subido por: {item.uploader}</p>
+                            <p>    Subido por: <br />
+                                <a href="" onClick={() => handleViewProfile(item.createdBy)}>
+                                    {item.createdBy}
+                                </a></p>
                         </div>
                     </div>
                     <button onClick={() => handleAddToCart(item)}>Añadir al carrito</button>
@@ -109,5 +136,7 @@ function Cartas() {
         </div>
     );
 }
+
+
 
 export default Cartas;

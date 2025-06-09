@@ -121,3 +121,20 @@ nav ul li a:hover {
 .login-dropdown.show .login-container {
   display: block;
 }
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .navbar-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .navbar-logo img {
+    width: 100px;
+  }
+}

@@ -7,7 +7,10 @@ const MyProducts = () => {
     const { user } = useContext(UserContext);
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5;
+    const [itemsPerPage] = useState(5);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     useEffect(() => {
         const fetchMyProducts = async () => {
@@ -26,20 +29,52 @@ const MyProducts = () => {
         }
     }, [user]);
 
-    const handleEdit = (productId) => {
-        alert(`Editar producto con ID: ${productId}`);
-        // Implementa la lógica de edición aquí
+    const handleEdit = (product) => {
+        setSelectedProduct(product);
+        setCurrentImageIndex(0); // Reinicia el índice de la imagen al abrir el modal
+        setShowEditModal(true);
+    };
+
+    const handleSave = async () => {
+        try {
+            const response = await axios.put(`https://footballtrading.onrender.com/api/products/${selectedProduct._id}`, selectedProduct);
+            alert('Producto actualizado exitosamente');
+            setProducts(products.map((product) =>
+                product._id === selectedProduct._id ? response.data.product : product
+            ));
+            setShowEditModal(false);
+        } catch (error) {
+            console.error('Error al actualizar el producto:', error);
+            alert('Error al actualizar el producto');
+        }
     };
 
     const handleDelete = async (productId) => {
         try {
-            await axios.delete(`http://localhost:3000/api/products/${productId}`);
+            await axios.delete(`https://footballtrading.onrender.com/api/products/${productId}`);
             setProducts(products.filter(product => product._id !== productId));
             alert('Producto eliminado exitosamente');
         } catch (error) {
             console.error('Error al eliminar el producto:', error);
             alert('Error al eliminar el producto');
         }
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setSelectedProduct({ ...selectedProduct, [name]: value });
+    };
+
+    const handleNextImage = () => {
+        setCurrentImageIndex((prevIndex) =>
+            prevIndex === selectedProduct.imagenesAdjuntas.length - 1 ? 0 : prevIndex + 1
+        );
+    };
+
+    const handlePreviousImage = () => {
+        setCurrentImageIndex((prevIndex) =>
+            prevIndex === 0 ? selectedProduct.imagenesAdjuntas.length - 1 : prevIndex - 1
+        );
     };
 
     const paginatedProducts = products.slice(
@@ -63,7 +98,7 @@ const MyProducts = () => {
                                 <p>Descripción: {product.descripcion}</p>
                             </div>
                             <div className="product-item-buttons">
-                                <button onClick={() => handleEdit(product._id)}>Editar</button>
+                                <button onClick={() => handleEdit(product)}>Editar</button>
                                 <button onClick={() => handleDelete(product._id)}>Eliminar</button>
                             </div>
                         </div>
@@ -89,6 +124,54 @@ const MyProducts = () => {
                     Siguiente
                 </button>
             </div>
+            {showEditModal && (
+                <div className="edit-modal">
+                    <div className="edit-modal-content">
+                        <h2>Editar Producto</h2>
+                        <label>
+                            Título:
+                            <input
+                                type="text"
+                                name="titulo"
+                                value={selectedProduct.titulo}
+                                onChange={handleInputChange}
+                            />
+                        </label>
+                        <label>
+                            Precio:
+                            <input
+                                type="number"
+                                name="precio"
+                                value={selectedProduct.precio}
+                                onChange={handleInputChange}
+                            />
+                        </label>
+                        <label>
+                            Descripción:
+                            <textarea
+                                name="descripcion"
+                                value={selectedProduct.descripcion}
+                                onChange={handleInputChange}
+                            ></textarea>
+                        </label>
+                        <div className="carousel">
+                            <button className="carousel-button prev" onClick={handlePreviousImage}>
+                                &#8249;
+                            </button>
+                            <img
+                                src={selectedProduct.imagenesAdjuntas[currentImageIndex]}
+                                alt={`Imagen ${currentImageIndex + 1}`}
+                                className="carousel-image"
+                            />
+                            <button className="carousel-button next" onClick={handleNextImage}>
+                                &#8250;
+                            </button>
+                        </div>
+                        <button onClick={handleSave}>Guardar</button>
+                        <button onClick={() => setShowEditModal(false)}>Cancelar</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

@@ -1,24 +1,24 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/cloths.css';
-import OpcionCompra from '../components/buyOption';
+import ProductDetails from '../components/productDetails.jsx';
 import { ProductContext } from '../services/productContext.js';
+import { useNavigate } from 'react-router-dom';
 
 function Ropa() {
     const [searchTerm, setSearchTerm] = useState('');
     const [itemsToShow, setItemsToShow] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
-    const [showOpcionCompra, setShowOpcionCompra] = useState(false);
+    const [showProductDetails, setShowProductDetails] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
     const { products, setProducts } = useContext(ProductContext);
+    const navigate = useNavigate();
     const defaultUserImg = 'assets/images/Unknown.jpg';
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-
                 const response = await axios.get('https://footballtrading.onrender.com/api/products');
-              
                 setProducts(response.data);
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -46,18 +46,17 @@ function Ropa() {
         }
     };
 
-    const handleAddToCart = (item) => {
+    const handleViewDetails = (item) => {
         setSelectedItem(item);
-        setShowOpcionCompra(true);
+        setShowProductDetails(true);
     };
 
-    const handleCloseOpcionCompra = () => {
-        setShowOpcionCompra(false);
+    const handleCloseProductDetails = () => {
+        setShowProductDetails(false);
     };
 
-    const handleFinalizePurchase = () => {
-        alert('Añadido al carrito con éxito');
-        setShowOpcionCompra(false);
+    const handleViewProfile = (username) => {
+        navigate(`/profile?username=${username}`); // Redirigir a la página de perfil del usuario
     };
 
     return (
@@ -81,18 +80,19 @@ function Ropa() {
                         </div>
                         <div className="info-box price-box">
                             <p className="price-title">Precio</p>
-                            <p className="price">{item.precio} €</p>
-                        </div>
-                        <div className="info-box">
-                            <p className="price-title">Talla</p>
-                            <p className="price">{item.talla}</p>
+                            <p className="price">€{item.precio}</p>
                         </div>
                         <div className="info-box uploader">
                             <img src={defaultUserImg} alt="Uploader" />
-                            <p>Subido por: <br></br>{item.createdBy}</p>
+                            <p>
+                                Subido por: <br />
+                                <a href="" onClick={() => handleViewProfile(item.createdBy)}>
+                                    {item.createdBy}
+                                </a>
+                            </p>
                         </div>
                     </div>
-                    <button onClick={() => handleAddToCart(item)}>Añadir al carrito</button>
+                    <button onClick={() => handleViewDetails(item)}>Ver detalles</button>
                 </div>
             ))}
             <div className="breadcrumb">
@@ -119,11 +119,10 @@ function Ropa() {
                     Siguiente
                 </button>
             </div>
-            {showOpcionCompra && (
-                <OpcionCompra
+            {showProductDetails && (
+                <ProductDetails
                     item={selectedItem}
-                    onClose={handleCloseOpcionCompra}
-                    onFinalize={handleFinalizePurchase}
+                    onClose={handleCloseProductDetails}
                 />
             )}
         </div>

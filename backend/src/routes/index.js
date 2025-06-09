@@ -2,8 +2,10 @@ import { Router } from 'express';
 import upload from '../services/multerConfig.js';
 import { updateUserController, createUserController, deleteUserController, loginUserController, getUserProfileController } from '../controllers/userController.js';
 import { createProductController, deleteProductController, updateProductController } from '../controllers/productController.js';
+import { sendResetPasswordEmail, resetPassword} from '../controllers/passwordController.js';
+import { createPaymentIntent, handlePaymentSuccess } from '../controllers/paymentController.js';
 import { Product } from '../models/product.js'; // Asegúrate de importar el modelo Product
-import authMiddleware from '../middlewares/authMiddleware.js';
+import authMiddleware from '../middleware/authMiddleware.js';
 
 const router = Router();
 
@@ -333,4 +335,77 @@ router.delete('/products/:id', deleteProductController);
  */
 router.put('/products/:id', updateProductController);
 
+/**
+ * @swagger
+ * /create-payment-intent:
+ *   post:
+ *     summary: Crear un PaymentIntent para Stripe
+ *     tags: [Payments]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               cartItems:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                     titulo:
+ *                       type: string
+ *                     precio:
+ *                       type: number
+ *                     quantity:
+ *                       type: number
+ *     responses:
+ *       200:
+ *         description: PaymentIntent creado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 clientSecret:
+ *                   type: string
+ *       500:
+ *         description: Error al crear el PaymentIntent
+ */
+
+router.post('/create-payment-intent', createPaymentIntent);
+/**
+ * @swagger
+ * /payment-success:
+ *   post:
+ *     summary: Confirmar el éxito del pago y eliminar productos comprados
+ *     tags: [Payments]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               cartItems:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *     responses:
+ *       200:
+ *         description: Productos eliminados exitosamente
+ *       500:
+ *         description: Error al eliminar productos
+ */
+
+router.post('/payment-success', handlePaymentSuccess);
+
+router.post('/forgot-password', sendResetPasswordEmail);
+
+router.post('/reset-password', resetPassword);
 export default router;

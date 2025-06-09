@@ -71,3 +71,22 @@
 .right-link {
     text-align: right;
 }
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .login-container {
+    padding: 10px;
+  }
+
+  .login-form {
+    width: 100%;
+  }
+
+  .login-form input {
+    width: 100%;
+  }
+
+  .login-button {
+    width: 100%;
+  }
+}

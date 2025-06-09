@@ -20,5 +20,5 @@ server.listen(config.port, (err) => {
     console.error(`Error starting server: ${err.message}`);
     process.exit(1);
   }
-  console.log(`Server is running on http://localhost:${config.port}`);
+  ;
 });

@@ -70,3 +70,23 @@
   justify-content: flex-start;
   margin-top: 5rem; /* Increase margin to position input and button lower */
 }
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .newsletter-container {
+    padding: 10px;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .newsletter-form input {
+    width: 100%;
+  }
+
+  .newsletter-button {
+    width: 100%;
+  }
+}

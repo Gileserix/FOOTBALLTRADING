@@ -1,15 +1,17 @@
 .cart {
-    padding: 20px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 8px;
-    margin-top: 20px;
-    max-width: 1200px; /* Aumentar el ancho máximo del carrito */
-    margin: 0 auto;
+    max-width: 1600px; /* Aumentar el ancho máximo del carrito */
     max-height: 500px; /* Limitar la altura del carrito */
+    margin: 5px;
     overflow-y: auto; /* Habilitar el scroll vertical */
     overflow-x: hidden; /* Evitar que los elementos excedan el ancho */
     box-sizing: border-box; /* Incluir padding y border en el ancho total */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centrar el contenido cuando esté vacío */
   }
   
   .cart h2 {
@@ -65,6 +67,8 @@
     background-color: #ff4d4d;
     color: white;
     cursor: pointer;
+    margin-left: 20px; 
+    margin-right: 45px;
   }
   
   .remove-button:hover {
@@ -89,4 +93,63 @@
   
   .checkout-button:hover {
     background-color: #0056b3;
+  }
+  
+  /* Estilo para el carrito vacío */
+  .cart-empty {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #555;
+    margin-top: 20px;
+    padding: 20px;
+    border: 2px dashed #007bff; /* Bordes estilizados */
+    border-radius: 8px;
+    background-color: #f0f8ff; /* Fondo ligeramente azul */
+    animation: fadeIn 1s ease-in-out; /* Animación */
+  }
+  
+  /* Animación para el carrito vacío */
+  @keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .cart {
+      max-width: 100%; /* Ajustar el ancho en móviles */
+    }
+    .cart-item-details {
+    margin-right: 20px;
+    }
+    .cart-item {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .cart-item-img {
+      width: 100px;
+      height: 100px;
+    }
+  
+    .cart-total {
+      font-size: 1.2rem;
+    }
+  
+    .cart-empty {
+      font-size: 1rem;
+      padding: 15px;
+    }
+  
+    .remove-button {      /* Eliminar el margen en modo móvil */
+      margin-top: 10px;
+ /* Añadir espacio superior en móviles */
+    }
   }

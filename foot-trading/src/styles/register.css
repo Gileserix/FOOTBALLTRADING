@@ -43,3 +43,22 @@
 .register-container button:hover {
   background-color: #0056b3;
 }
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .register-container {
+    padding: 10px;
+  }
+
+  .register-form {
+    width: 100%;
+  }
+
+  .register-form input {
+    width: 100%;
+  }
+
+  .register-button {
+    width: 100%;
+  }
+}

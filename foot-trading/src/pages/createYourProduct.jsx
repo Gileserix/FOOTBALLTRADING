@@ -6,11 +6,12 @@ import { ProductContext } from '../services/productContext.js';
 
 const CreaTuProducto = () => {
   const [images, setImages] = useState([]);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0); // Estado para el carrusel
   const [formData, setFormData] = useState({
     productName: '',
     description: '',
     price: '',
-    category: 'Ropa', // Asegúrate de que los valores coincidan con los esperados en el backend
+    category: 'Ropa',
     talla: '',
     certificadoAutenticidad: false,
     categoriaAccesorio: ''
@@ -25,6 +26,18 @@ const CreaTuProducto = () => {
       return;
     }
     setImages([...images, ...files]);
+  };
+
+  const handleNextImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const handlePreviousImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
   };
 
   const handleInputChange = (e) => {
@@ -55,7 +68,7 @@ const CreaTuProducto = () => {
 
     try {
       // Crear producto en la base de datos
-      const response = await api.post('http://localhost:3000/api/upload-product', data, {
+      const response = await api.post('https://footballtrading.onrender.com/api/upload-product', data, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -110,6 +123,7 @@ const CreaTuProducto = () => {
             <label>
               Categoría del Accesorio:
               <select name="categoriaAccesorio" value={formData.categoriaAccesorio} onChange={handleInputChange}>
+                <option value="">No seleccionado</option>
                 <option value="Balones">Balones</option>
                 <option value="Espinilleras">Espinilleras</option>
                 <option value="Otro">Otro</option>
@@ -122,13 +136,21 @@ const CreaTuProducto = () => {
       <div className="right-div">
         <h2>Añadir Imágenes del Producto</h2>
         <input type="file" multiple onChange={handleImageUpload} />
-        <div className="image-preview">
-          {images.map((image, index) => (
-            <div key={image.name + index} className="image-slot">
-              <img src={URL.createObjectURL(image)} alt={`Producto ${index + 1}`} />
-            </div>
-          ))}
-        </div>
+        {images.length > 0 && (
+          <div className="carousel">
+            <button className="carousel-button prev" onClick={handlePreviousImage}>
+              &#8249;
+            </button>
+            <img
+              src={URL.createObjectURL(images[currentImageIndex])}
+              alt={`Imagen ${currentImageIndex + 1}`}
+              className="carousel-image"
+            />
+            <button className="carousel-button next" onClick={handleNextImage}>
+              &#8250;
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

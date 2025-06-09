@@ -44,3 +44,27 @@
 .profile-row button:hover {
     background-color: #0056b3;
 }
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 10px;
+  }
+
+  .profile-info {
+    text-align: center;
+  }
+
+  .profile-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile-row input {
+    width: 100%;
+  }
+
+  .profile-row button {
+    width: 100%;
+  }
+}

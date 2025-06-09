@@ -1,7 +1,9 @@
 import React, { useState, useContext } from 'react';
 import '../styles/cloths.css'; // Puedes crear un archivo CSS específico para accesorios si lo prefieres
-import OpcionCompra from '../components/buyOption';
+import OpcionCompra from '../components/productDetails.jsx';
 import { ProductContext } from '../services/productContext.js';
+import { UserContext } from '../services/userContext.js'; // Importar el contexto del usuario
+import { useNavigate } from 'react-router-dom';
 
 function Accesorios() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -10,9 +12,12 @@ function Accesorios() {
     const [showOpcionCompra, setShowOpcionCompra] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
     const { products } = useContext(ProductContext);
+    const { user } = useContext(UserContext); // Obtener el usuario actual
+    const navigate = useNavigate();
     const defaultUserImg = 'assets/images/Unknown.jpg';
 
-    const items = products.filter(product => product.tipo === 'Accesorio');
+    // Filtrar productos para excluir los del usuario actual
+    const items = products.filter(product => product.tipo === 'Accesorio' && product.createdBy !== user);
 
     const filteredItems = items.filter(item =>
         item.titulo.toLowerCase().includes(searchTerm.toLowerCase())
@@ -44,6 +49,10 @@ function Accesorios() {
         setShowOpcionCompra(false);
     };
 
+    const handleViewProfile = (username) => {
+        navigate(`/profile?username=${username}`); // Redirigir a la página de perfil del usuario
+    };
+
     return (
         <div className="ropa-container">
             <input
@@ -69,7 +78,12 @@ function Accesorios() {
                         </div>
                         <div className="info-box uploader">
                             <img src={defaultUserImg} alt="Uploader" />
-                            <p>Subido por: {item.uploader}</p>
+                            <p>
+                                Subido por: <br />
+                                <a href="" onClick={() => handleViewProfile(item.createdBy)}>
+                                    {item.createdBy}
+                                </a>
+                            </p>
                         </div>
                     </div>
                     <button onClick={() => handleAddToCart(item)}>Añadir al carrito</button>

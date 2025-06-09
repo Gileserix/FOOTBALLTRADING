@@ -64,17 +64,103 @@ form button:hover {
 }
 
 .image-slot.large {
-  width: 100%;
-  height: 200px;
+  width: 500px; /* Ajusta el ancho para que coincida con el tamaño de la imagen */
+  height: 500px; /* Ajusta el alto para que coincida con el tamaño de la imagen */
 }
 
 .image-slot.small {
-  width: calc(20% - 10px); /* 5 small slots in a row with 10px gap */
-  height: 100px;
+  width: 500px; /* Ajusta el ancho para que coincida con el tamaño de la imagen */
+  height: 500px; /* Ajusta el alto para que coincida con el tamaño de la imagen */
 }
 
 .image-slot img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: cover;
+  width: 700px; /* Establece el ancho fijo */
+  height: 700px; /* Establece el alto fijo */
+  object-fit: cover; /* Ajusta la imagen para que se adapte al tamaño */
+  border-radius: 8px; /* Opcional: bordes redondeados */
+}
+
+.carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.carousel-image {
+    width: 500px; /* Establece el ancho fijo */
+    height: 500px; /* Establece el alto fijo */
+    object-fit: cover; /* Ajusta la imagen para que se adapte al tamaño */
+    border-radius: 8px; /* Opcional: bordes redondeados */
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-button.prev {
+    left: 10px;
+}
+
+.carousel-button.next {
+    right: 10px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .crea-tu-producto-container {
+    padding: 10px;
+  }
+
+  .left-div, .right-div {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+
+  form label {
+    margin-bottom: 5px;
+  }
+
+  form input, form textarea {
+    width: 100%;
+  }
+
+  form button {
+    width: 100%;
+  }
+
+  .image-preview {
+    flex-direction: column;
+  }
+
+  .image-slot {
+    width: 100%;
+    height: auto;
+  }
+
+  .carousel-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .carousel-button {
+    width: 30px;
+    height: 30px;
+    font-size: 1.2rem;
+  }
 }
