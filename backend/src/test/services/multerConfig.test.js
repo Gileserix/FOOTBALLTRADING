@@ -5,7 +5,7 @@ import upload from '../../services/multerConfig.js';
 
 jest.mock('multer');
 jest.mock('multer-storage-cloudinary');
-jest.mock('./cloudinaryConfig.js');
+jest.mock('../../services/cloudinaryConfig.js');
 
 describe('multerConfig', () => {
   it('should configure CloudinaryStorage correctly', () => {

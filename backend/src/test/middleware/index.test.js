@@ -1,7 +1,10 @@
-import { authMiddleware, errorHandlerMiddleware } from '../../middleware/index.js';
+import authMiddleware  from '../../middleware/authMiddleware.js';
+import  errorHandlerMiddleware  from '../../middleware/errorHandlerMiddleware.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import User from '../../models/user.js';
+import request from 'supertest';
+import express from 'express';
 
 jest.mock('jsonwebtoken');
 jest.mock('bcrypt');
@@ -84,6 +87,32 @@ describe('Middlewares', () => {
 
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({ message: 'Something broke!', error: err.message });
+    });
+  });
+
+  describe('Error Handler Middleware', () => {
+    let app;
+
+    beforeAll(() => {
+      app = express();
+
+      // Ruta que lanza un error para probar el middleware
+      app.get('/error', (req, res, next) => {
+        const error = new Error('Test error');
+        next(error);
+      });
+
+      // Middleware de manejo de errores
+      app.use(errorHandlerMiddleware);
+    });
+
+    test('should handle errors and return a 500 status code', async () => {
+      const response = await request(app)
+        .get('/error')
+        .expect(500);
+
+      expect(response.body.message).toBe('Something broke!');
+      expect(response.body.error).toBe('Test error');
     });
   });
 });

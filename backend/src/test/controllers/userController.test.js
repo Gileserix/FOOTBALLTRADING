@@ -1,7 +1,7 @@
 import request from 'supertest';
 import app from '../../../app.js';
 import User from '../../models/user.js';
-import connectDB from '../../services/mongo.js';
+import connectDB from '../../loaders/mongo.js';
 import bcrypt from 'bcrypt';
 
 describe('User Controller', () => {
@@ -21,9 +21,9 @@ describe('User Controller', () => {
 
   test('should create a new user', async () => {
     const newUser = {
-      username: 'testuser',
+      username: 'pruebauser',
       password: 'password123',
-      email: 'testuser@example.com',
+      email: 'pruebauser@example.com',
       firstName: 'Test',
       lastName: 'User',
       birthDate: '1990-01-01',
@@ -41,9 +41,9 @@ describe('User Controller', () => {
 
   test('should login a user', async () => {
     const newUser = new User({
-      username: 'testuser',
+      username: 'pruebauser',
       password: await bcrypt.hash('password123', 10),
-      email: 'testuser@example.com',
+      email: 'pruebauser@example.com',
       firstName: 'Test',
       lastName: 'User',
       birthDate: '1990-01-01',
@@ -52,7 +52,7 @@ describe('User Controller', () => {
     await newUser.save();
 
     const loginData = {
-      username: 'testuser',
+      username: 'pruebauser',
       password: 'password123'
     };
 
@@ -67,9 +67,9 @@ describe('User Controller', () => {
 
   test('should get user profile', async () => {
     const newUser = new User({
-      username: 'testuser',
+      username: 'pruebauser',
       password: await bcrypt.hash('password123', 10),
-      email: 'testuser@example.com',
+      email: 'pruebauser@example.com',
       firstName: 'Test',
       lastName: 'User',
       birthDate: '1990-01-01',
@@ -79,7 +79,7 @@ describe('User Controller', () => {
 
     const response = await request(app)
       .get('/api/users/profile')
-      .query({ username: 'testuser' })
+      .query({ username: 'pruebauser' })
       .expect(200);
 
     expect(response.body.username).toBe(newUser.username);
@@ -88,9 +88,9 @@ describe('User Controller', () => {
 
   test('should delete a user by ID', async () => {
     const newUser = new User({
-      username: 'testuser',
+      username: 'pruebauser',
       password: await bcrypt.hash('password123', 10),
-      email: 'testuser@example.com',
+      email: 'pruebauser@example.com',
       firstName: 'Test',
       lastName: 'User',
       birthDate: '1990-01-01',
