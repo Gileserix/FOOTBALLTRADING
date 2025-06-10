@@ -1,11 +1,15 @@
 import { Product, Ropa, Carta, Accesorio } from '../models/product.js';
+
 export const createProductController = async (req, res) => {
     const { titulo, precio, descripcion, tipo, talla, certificadoAutenticidad, categoria } = req.body;
     const createdBy = req.user?.username || 'Unknown'; // Asume que el usuario está disponible en req.user
+
     try {
         // Obtener las URLs de las imágenes subidas a Cloudinary
         const imagenesAdjuntas = req.files ? req.files.map(file => file.path) : [];
+
         console.log('Datos recibidos:', { titulo, precio, descripcion, tipo, talla, certificadoAutenticidad, categoria, imagenesAdjuntas, createdBy });
+
         let newProduct;
         if (tipo === 'Ropa') {
             newProduct = new Ropa({ titulo, precio, descripcion, imagenesAdjuntas, talla: talla.toUpperCase(), createdBy });
@@ -16,6 +20,7 @@ export const createProductController = async (req, res) => {
         } else {
             return res.status(400).json({ message: 'Tipo de producto no válido' });
         }
+
         // Guardar el producto en la base de datos
         await newProduct.save();
 
@@ -25,6 +30,7 @@ export const createProductController = async (req, res) => {
         res.status(400).json({ message: 'Error al crear el producto', error: error.message });
     }
 };
+
 export const deleteProductController = async (req, res) => {
     const { id } = req.params;
 
@@ -41,6 +47,7 @@ export const deleteProductController = async (req, res) => {
         res.status(400).json({ message: 'Error al borrar el producto', error: error.message });
     }
 };
+
 export const updateProductController = async (req, res) => {
     const { id } = req.params;
     const { titulo, precio, descripcion, imagenesAdjuntas, tipo, talla, certificadoAutenticidad, categoria } = req.body;
@@ -66,15 +73,17 @@ export const updateProductController = async (req, res) => {
         res.status(400).json({ message: 'Error al actualizar el producto', error: error.message });
     }
 };
-export const getProductsController = async (req, res) => {
-    try {
-        const products = await Product.find();
-        if (products.length === 0) {
-            return res.status(404).json({ message: 'No se encontraron productos' });
-        }
-        res.status(200).json(products);
-    } catch (error) {
-        console.error('Error al obtener los productos:', error);
-        res.status(500).json({ message: 'Error al obtener los productos', error: error.message });
+
+export const getProductController = async (req, res) => {
+  try {
+    const products = await Product.find();
+    if (!products) {
+      return res.status(404).json({ message: 'No se encontraron productos' });
     }
+
+    res.status(200).json(products);
+  } catch (error) {
+    console.error('Error al obtener productos:', error);
+    res.status(500).json({ message: 'Error al obtener productos', error: error.message });
+  }
 };
