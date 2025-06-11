@@ -15,10 +15,10 @@ const MyProducts = () => {
     useEffect(() => {
         const fetchMyProducts = async () => {
             try {
-                const response = await axios.get('https://footballtrading.onrender.com/api/products');
-                // Filtrar los productos por el usuario actual
-                const userProducts = response.data.filter(product => product.createdBy === user.username);
-                setProducts(userProducts);
+                const response = await axios.get('https://footballtrading.onrender.com/api/products', {
+                    params: { createdBy: user }
+                });
+                setProducts(response.data);
             } catch (error) {
                 console.error('Error al obtener los productos:', error);
             }
