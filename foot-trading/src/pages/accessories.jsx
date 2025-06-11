@@ -17,7 +17,7 @@ function Accesorios() {
     const defaultUserImg = 'assets/images/Unknown.jpg';
 
     // Filtrar productos para excluir los del usuario actual
-    const items = products.filter(product => product.tipo === 'Accesorio' && product.createdBy !== user);
+    const items = products.filter(product => product.tipo === 'Accesorio');
 
     const filteredItems = items.filter(item =>
         item.titulo.toLowerCase().includes(searchTerm.toLowerCase())
