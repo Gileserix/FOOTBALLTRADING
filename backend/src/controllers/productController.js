@@ -74,16 +74,23 @@ export const updateProductController = async (req, res) => {
     }
 };
 
-export const getProductController = async (req, res) => {
-  try {
-    const products = await Product.find();
-    if (!products) {
-      return res.status(404).json({ message: 'No se encontraron productos' });
-    }
+export const getProductsController = async (req, res) => {
+    const { createdBy } = req.query;
 
-    res.status(200).json(products);
-  } catch (error) {
-    console.error('Error al obtener productos:', error);
-    res.status(500).json({ message: 'Error al obtener productos', error: error.message });
-  }
+    try {
+        let query = {};
+        if (createdBy) {
+            query.createdBy = createdBy; // Filtrar por el usuario que creó el producto
+        }
+
+        const products = await Product.find(query);
+        if (products.length === 0) {
+            return res.status(404).json({ message: 'No se encontraron productos' });
+        }
+
+        res.status(200).json(products);
+    } catch (error) {
+        console.error('Error al obtener los productos:', error);
+        res.status(500).json({ message: 'Error al obtener los productos', error: error.message });
+    }
 };
